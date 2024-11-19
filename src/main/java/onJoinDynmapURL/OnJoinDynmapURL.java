@@ -12,7 +12,7 @@ public final class OnJoinDynmapURL extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getLogger().info("OnJoinDynmapUrl is now enabled!");
+        getLogger().info("OnJoinDynmapURL is now enabled!");
         saveDefaultConfig();
         String mapURL = getConfig().getString("URL");
 
@@ -24,14 +24,14 @@ public final class OnJoinDynmapURL extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        getLogger().info("OnJoinDynmapUrl is now disabled!");
+        getLogger().info("OnJoinDynmapURL is now disabled!");
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //permission
-        if (sender.hasPermission("OnJoinDynmapUrl.commands.dynurl")) {
+        if (sender.hasPermission("OnJoinDynmapURL.commands.dynurl")) {
 
             //command name
             if (command.getName().equalsIgnoreCase("dynurl")) {
@@ -45,13 +45,13 @@ public final class OnJoinDynmapURL extends JavaPlugin {
                         //on
                         if (args[0].equalsIgnoreCase("on")) {
                             sendURL = true;
-                            sender.sendMessage("Dynmap URL sending is now"  + "§aEnabled");
+                            sender.sendMessage("Dynmap URL sending is now "  + "§aEnabled");
                         }
 
                         //off
                         if (args[0].equalsIgnoreCase("off")) {
                             sendURL = false;
-                            sender.sendMessage("Dynmap URL sending is now" +  "§4Disabled");
+                            sender.sendMessage("Dynmap URL sending is now " +  "§4Disabled");
                         }
 
                         //help

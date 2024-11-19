@@ -1,11 +1,11 @@
 name: On-Join-Dynmap-Url
-version: '1.0-SNAPSHOT'
-main: onJoinDynmapUrl.OnJoinDynmapUrl
+version: '1.1-SNAPSHOT'
+main: onJoinDynmapURL.OnJoinDynmapURL
 api-version: '1.21'
 commands:
   dynurl:
     description: Toggles sending Dynmap URL on player join.
-permission: OnJoinDynmapUrl.commands.dynurl
+permission: OnJoinDynmapURL.commands.dynurl
 permissions:
   OnJoinDynmapUrl.*:
     children:
