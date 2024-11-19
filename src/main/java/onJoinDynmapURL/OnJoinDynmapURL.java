@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public final class OnJoinDynmapURL extends JavaPlugin {
 
-    public boolean sendURL = true;
+    boolean sendURL = getConfig().getBoolean("Send-URL-Global");
 
     @Override
     public void onEnable() {
@@ -16,9 +16,11 @@ public final class OnJoinDynmapURL extends JavaPlugin {
         saveDefaultConfig();
         String mapURL = getConfig().getString("URL");
 
-        JoinListener joinListener = new JoinListener(mapURL);
-        //イベントリスナー登録
-        getServer().getPluginManager().registerEvents(joinListener, this);
+        if (sendURL) {
+            JoinListener joinListener = new JoinListener(mapURL);
+            //イベントリスナー登録
+            getServer().getPluginManager().registerEvents(joinListener, this);
+        }
     }
 
     @Override
@@ -44,13 +46,15 @@ public final class OnJoinDynmapURL extends JavaPlugin {
 
                         //on
                         if (args[0].equalsIgnoreCase("on")) {
-                            sendURL = true;
+                            getConfig().set("Send-URL-Global", true);
+                            saveConfig();
                             sender.sendMessage("Dynmap URL sending is now "  + "§aEnabled");
                         }
 
                         //off
                         if (args[0].equalsIgnoreCase("off")) {
-                            sendURL = false;
+                            getConfig().set("Send-URL-Global", false);
+                            saveConfig();
                             sender.sendMessage("Dynmap URL sending is now " +  "§4Disabled");
                         }
 
