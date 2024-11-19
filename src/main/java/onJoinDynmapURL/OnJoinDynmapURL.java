@@ -16,6 +16,12 @@ public final class OnJoinDynmapURL extends JavaPlugin {
         saveDefaultConfig();
         String mapURL = getConfig().getString("URL");
 
+        if (mapURL == null) {
+            getLogger().warning("§4URL is empty in config.yml. Please set valid URL.");
+            getConfig().set("URL", "");
+            saveConfig();
+        }
+
         if (sendURL) {
             JoinListener joinListener = new JoinListener(mapURL);
             //イベントリスナー登録
