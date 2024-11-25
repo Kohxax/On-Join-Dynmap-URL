@@ -1,21 +1,25 @@
 name: On-Join-Dynmap-Url
-version: '1.1-SNAPSHOT'
+version: '1.5-SNAPSHOT'
 main: dev.bokukoha.onJoinDynmapURL.OnJoinDynmapURL
 api-version: '1.21'
 commands:
-  dynurl:
+  dynURL:
     description: Toggles sending Dynmap URL on player join.
 permission: OnJoinDynmapURL.commands.dynurl
 permissions:
-  OnJoinDynmapUrl.*:
+  OnJoinDynmapURL.*:
     children:
-      OnJoinDynmapUrl: true
+      OnJoinDynmapURL: true
     description: all commands.
     default: op
-  OnJoinDynmapUrl.commands:
+  OnJoinDynmapURL.commands:
     default: op
     children:
-      OnJoinDynmapUrl.commands.dynurl: true
+      OnJoinDynmapURL.commands.dynurl: true
+      OnJoinDynmapURL.commands.default: true
   OnJoinDynmapUrl.commands.dynurl:
-    description: only dynurl command.
+    description: only dynURL personal command.
+    default: false
+  OnJoinDynmapURL.commands.default:
+    description: access to global sending URL settings.
     default: false

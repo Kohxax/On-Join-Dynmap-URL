@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'koha'
-version = '1.2-SNAPSHOT'
+version = '1.5-SNAPSHOT'
 
 repositories {
     mavenCentral()
