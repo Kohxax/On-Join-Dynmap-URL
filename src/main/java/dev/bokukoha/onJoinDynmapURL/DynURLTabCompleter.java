@@ -19,13 +19,24 @@ public class DynURLTabCompleter implements TabCompleter {
             return null;
         }
 
-        //first arg
+        //dynurl permission check
+        if (!sender.hasPermission("OnJoinDynmapURL.commands.dynurl")) {
+            return null;
+        }
+
+        //first arg (dynurl)
         if (args.length == 1) {
-            List<String> subCommands = Arrays.asList("on", "off", "default", "help");
+            List<String> subCommands = new ArrayList<>(Arrays.asList("on", "off", "help"));
+
+            //default permission check
+            if (sender.hasPermission("OnJoinDynmapURL.commands.default")) {
+                subCommands.add("default");
+            }
+
             return filterByInput(subCommands, args[0]);
         }
 
-        //second arg
+        //second arg (default)
         if (args.length == 2 && args[0].equalsIgnoreCase("default")) {
             List<String> subCommands = Arrays.asList("on", "off");
             return filterByInput(subCommands, args[1]);
@@ -34,6 +45,7 @@ public class DynURLTabCompleter implements TabCompleter {
 
     }
 
+    //filter list options for command
     private List<String> filterByInput(List<String> options, String input) {
         List<String> filtered = new ArrayList<>();
 
