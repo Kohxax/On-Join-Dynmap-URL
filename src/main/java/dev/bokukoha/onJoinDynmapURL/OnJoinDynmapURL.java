@@ -10,7 +10,7 @@ public class OnJoinDynmapURL extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        //load Default URL sending setting from config.yml
+        //load default URL sending setting from config.yml
         boolean sendURLDefault = getConfig().getBoolean("Send-URL-Default");
 
         // Plugin startup logic
@@ -18,17 +18,22 @@ public class OnJoinDynmapURL extends JavaPlugin {
         saveDefaultConfig();
         String mapURL = getConfig().getString("URL");
 
+        //send message if URL section in config.yml is empty
         if (mapURL == null) {
             getLogger().warning("§4URL is empty in config.yml. Please set valid URL.");
             getConfig().set("URL", "");
             saveConfig();
         }
 
+        //register player join listener
         if (sendURLDefault) {
             JoinListener joinListener = new JoinListener(mapURL);
             //registering event listener
             getServer().getPluginManager().registerEvents(joinListener, this);
         }
+
+        //register tab completer
+        getCommand("dynurl").setTabCompleter(new DynURLTabCompleter());
     }
 
     @Override
