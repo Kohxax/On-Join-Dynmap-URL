@@ -130,9 +130,9 @@ public class OnJoinDynmapURL extends JavaPlugin {
 
     //Help message
     private void sendHelpMessage(CommandSender sender) {
-        sender.sendMessage("§l§a--DynmapTogglePlugin Commands--");
-        sender.sendMessage("/dynurl on - Enable Dynmap URL sending.");
-        sender.sendMessage("/dynurl off - Disable Dynmap URL sending.");
+        sender.sendMessage("§l§a---------DynmapURL Toggle Commands---------");
+        sender.sendMessage("/dynurl on - Enable Dynmap URL sending to you.");
+        sender.sendMessage("/dynurl off - Disable Dynmap URL sending to you.");
         sender.sendMessage("/dynurl default on - Set global URL sending to Enable.");
         sender.sendMessage("/dynurl default off - Set global URL sending to Disable.");
         sender.sendMessage("/dynurl help - Show this help message.");
