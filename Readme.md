@@ -1,4 +1,5 @@
 A simple Spigot plugin that allows you to create a custom join message for your server.
+Works with spigot 1.8.8 and above.
 
 ## Installation
 1. Download the latest release from the [releases page](https://github.com/Kohxax/On-Join-Dynmap-URL/releases/)
