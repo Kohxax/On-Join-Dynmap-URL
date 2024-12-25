@@ -1,5 +1,5 @@
 name: On-Join-Dynmap-Url
-version: '1.7-SNAPSHOT'
+version: '1.0-release'
 main: dev.bokukoha.onJoinDynmapURL.OnJoinDynmapURL
 api-version: '1.21'
 commands:

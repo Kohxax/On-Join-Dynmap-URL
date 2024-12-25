@@ -5,23 +5,33 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class JoinListener implements Listener{
+public class JoinListener implements Listener {
 
     private final String mapURL;
+    private final OnJoinDynmapURL plugin;
 
-    //constructor of mapURL
-    public JoinListener(String mapURL) {
+    public JoinListener(String mapURL, OnJoinDynmapURL plugin) {
         this.mapURL = mapURL;
+        this.plugin = plugin;
     }
 
-    //sending URL
     public void sendMapURL(Player player) {
         player.sendMessage("§aDynmapURL" + "§f: " + mapURL);
     }
 
-    //detect player connection
     @EventHandler
     public void onPlayerJoinEvents(PlayerJoinEvent event) {
-        sendMapURL(event.getPlayer());
+        Player player = event.getPlayer();
+
+        //get personal setting from database
+        boolean sendURLPersonal = plugin.getDatabaseManager().getSendURLSetting(player.getUniqueId());
+
+        if (!sendURLPersonal) {
+            return;
+        }
+
+        //send URL if personal setting is true
+        sendMapURL(player);
     }
 }
+

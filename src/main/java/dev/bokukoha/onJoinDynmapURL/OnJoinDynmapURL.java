@@ -4,19 +4,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import java.util.UUID;
 
 public class OnJoinDynmapURL extends JavaPlugin {
+
+    private DatabaseManager databaseManager;
+    private String mapURL;
 
     @Override
     public void onEnable() {
 
+        saveDefaultConfig();
+
+        //import URL from config.yml
+        mapURL = getConfig().getString("URL");
+
         //load default URL sending setting from config.yml
         boolean sendURLDefault = getConfig().getBoolean("Send-URL-Default");
 
+        //initialize database manager
+        databaseManager = new DatabaseManager();
+
         // Plugin startup logic
         getLogger().info("On-Join-Dynmap-URL is now enabled!");
-        saveDefaultConfig();
-        String mapURL = getConfig().getString("URL");
 
         //send message if URL section in config.yml is empty
         if (mapURL == null) {
@@ -27,13 +37,16 @@ public class OnJoinDynmapURL extends JavaPlugin {
 
         //register player join listener
         if (sendURLDefault) {
-            JoinListener joinListener = new JoinListener(mapURL);
-            //registering event listener
+            JoinListener joinListener = new JoinListener(mapURL, this);
             getServer().getPluginManager().registerEvents(joinListener, this);
         }
 
         //register tab completer
         getCommand("dynurl").setTabCompleter(new DynURLTabCompleter());
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
     @Override
@@ -62,23 +75,29 @@ public class OnJoinDynmapURL extends JavaPlugin {
             return true;
         }
 
+        Player player = (Player) sender;
+        UUID uuid = player.getUniqueId();
+        String name = player.getName();
+
         //length of args
         if (args.length == 0) {
-            unknownCommand(sender);
+            sendMapURL(player);
             return true;
         }
 
         //command list
         switch (args[0].toLowerCase()) {
 
-            //Enable personal setting - WIP
+            //set personal URL sending on
             case "on":
-                sender.sendMessage("This function is WIP.");
+                databaseManager.setSendURLSetting(uuid, name, true);
+                sender.sendMessage("§aDynmap URL sending enabled.");
                 break;
 
-            //Disable personal setting - WIP
+            //set personal URL sending off
             case "off":
-                sender.sendMessage("This function is WIP.");
+                databaseManager.setSendURLSetting(uuid, name, false);
+                sender.sendMessage("§4Dynmap URL sending disabled.");
                 break;
 
             //Set Default sending URL
@@ -120,7 +139,6 @@ public class OnJoinDynmapURL extends JavaPlugin {
                 sendHelpMessage(sender);
                 break;
 
-            //other
             default:
                 unknownCommand(sender);
                 break;
@@ -131,6 +149,7 @@ public class OnJoinDynmapURL extends JavaPlugin {
     //Help message
     private void sendHelpMessage(CommandSender sender) {
         sender.sendMessage("§l§a---------DynmapURL Toggle Commands---------");
+        sender.sendMessage("/dynurl - Send Dynmap URL to you.");
         sender.sendMessage("/dynurl on - Enable Dynmap URL sending to you.");
         sender.sendMessage("/dynurl off - Disable Dynmap URL sending to you.");
         sender.sendMessage("/dynurl default on - Set global URL sending to Enable.");
@@ -146,5 +165,9 @@ public class OnJoinDynmapURL extends JavaPlugin {
     //Unknown command message
     private void unknownCommand(CommandSender sender) {
         sender.sendMessage("Unknown Command! /dynurl help for command list");
+    }
+
+    private void sendMapURL(Player player) {
+        player.sendMessage("§aDynmapURL" + "§f: " + mapURL);
     }
 }
